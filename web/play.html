@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>undercroft daily</title>
+  <meta name="description" content="A new ten-floor dungeon every day. Same dungeon for everyone. How deep can you get?">
+  <meta name="theme-color" content="#0c0a10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="play.css">
+</head>
+<body class="play">
+  <canvas id="screen" aria-label="The dungeon"></canvas>
+  <div class="hurt-flash" id="hurt" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="undercroft generator">
+      <canvas class="tile" data-tile="4,15" data-color="accent" width="16" height="16"></canvas>
+      <span>undercroft</span>
+    </a>
+    <span class="mode" id="mode"></span>
+    <a class="nav-link" href="./">Generator</a>
+  </header>
+
+  <section class="card status" aria-label="Status">
+    <div class="hp">
+      <div class="hp-row"><span>HP</span><b id="hp-text"></b></div>
+      <div class="hp-bar"><div id="hp-fill"></div></div>
+    </div>
+    <dl class="stats-grid">
+      <div><dt>Floor</dt><dd id="floor"></dd></div>
+      <div><dt>Atk</dt><dd id="atk"></dd></div>
+      <div><dt>Def</dt><dd id="def"></dd></div>
+      <div><dt>Gold</dt><dd id="gold"></dd></div>
+      <div><dt>Potions</dt><dd id="potions"></dd></div>
+      <div><dt>Turn</dt><dd id="turn"></dd></div>
+    </dl>
+    <div class="pips" id="pips" aria-hidden="true"></div>
+  </section>
+
+  <ol class="log" id="log" aria-live="polite"></ol>
+
+  <div class="prompt" id="prompt" hidden>Stairs down. Press <kbd>Enter</kbd> to descend</div>
+
+  <aside class="keys" aria-label="Controls">
+    <span><kbd>WASD</kbd> or arrows move and attack</span>
+    <span><kbd>Q</kbd> potion</span>
+    <span><kbd>Space</kbd> wait</span>
+    <span><kbd>Enter</kbd> descend</span>
+  </aside>
+
+  <div class="pad" aria-label="Touch controls">
+    <button type="button" data-act="up" aria-label="Up">▲</button>
+    <button type="button" data-act="left" aria-label="Left">◀</button>
+    <button type="button" data-act="wait" aria-label="Wait">·</button>
+    <button type="button" data-act="right" aria-label="Right">▶</button>
+    <button type="button" data-act="down" aria-label="Down">▼</button>
+    <button type="button" data-act="quaff" class="pad-potion" aria-label="Drink potion">
+      <canvas class="tile" data-tile="32,13" width="16" height="16"></canvas>
+    </button>
+    <button type="button" data-act="descend" class="pad-stairs" aria-label="Descend">
+      <canvas class="tile" data-tile="2,6" width="16" height="16"></canvas>
+    </button>
+  </div>
+
+  <dialog id="end" aria-labelledby="end-title">
+    <div class="end">
+      <canvas class="tile end-icon" id="end-icon" width="16" height="16"></canvas>
+      <h2 id="end-title"></h2>
+      <p id="end-sub"></p>
+      <pre class="share" id="share-text"></pre>
+      <div class="end-actions">
+        <button type="button" class="primary" id="copy">Copy result</button>
+        <button type="button" class="ghost" id="practice">Practice run</button>
+      </div>
+      <p class="end-note" id="end-note"></p>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script type="module" src="play.js"></script>
+</body>
+</html>

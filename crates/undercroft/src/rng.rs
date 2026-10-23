@@ -1,6 +1,7 @@
 //! xoshiro256** seeded via splitmix64. Implemented here rather than taken from
 //! `rand` so a dependency upgrade can never change what a seed produces.
 
+#[derive(Clone, Debug)]
 pub struct Rng {
     s: [u64; 4],
 }

@@ -1,6 +1,6 @@
 import init, * as uc from "./pkg/undercroft_wasm.js";
+import { TILE, loadImage, paintTiles, toast } from "./shared.js";
 
-const TILE = 16;
 const STYLE_ICONS = { dungeon: "2,6", caves: "26,8", overworld: "0,1" };
 const NUMBER_LINE = /^(\s*)([A-Za-z_]+)(\s*=\s*)(-?\d+(?:\.\d+)?)(\s*(?:#.*)?)$/;
 const SEED_WORDS = ["owl", "moss", "ember", "crypt", "lantern", "hollow", "rune", "ash", "vault", "fern", "tide", "bone", "wick", "gloam"];
@@ -423,27 +423,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 function paintIcons() {
-  if (!state.sheet) return;
-  const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
-  for (const canvas of document.querySelectorAll("canvas.tile")) {
-    const [col, row] = canvas.dataset.tile.split(",").map(Number);
-    const c = canvas.getContext("2d");
-    c.globalCompositeOperation = "source-over";
-    c.clearRect(0, 0, TILE, TILE);
-    c.drawImage(state.sheet, col * TILE, row * TILE, TILE, TILE, 0, 0, TILE, TILE);
-    c.globalCompositeOperation = "source-in";
-    c.fillStyle = canvas.dataset.color === "accent" ? accent : getComputedStyle(canvas.parentElement).color;
-    c.fillRect(0, 0, TILE, TILE);
-  }
-}
-
-function loadImage(src) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = src;
-  });
+  if (state.sheet) paintTiles(state.sheet);
 }
 
 function shuffle(array) {
@@ -482,17 +462,6 @@ function download(blob, name) {
   const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: name });
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-}
-
-let toastTimer = 0;
-function toast(text) {
-  el.toast.textContent = text;
-  el.toast.hidden = false;
-  el.toast.style.animation = "none";
-  void el.toast.offsetWidth; // restart the pop animation
-  el.toast.style.animation = "";
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { el.toast.hidden = true; }, 1400);
 }
 
 // Start last so every declaration above is initialised.

@@ -4,6 +4,7 @@ use std::cell::OnceCell;
 
 use undercroft::{Recipe, STYLES, Seed, World};
 use undercroft_render::Tileset;
+use undercroft_sim::{Action, Game, encode};
 use wasm_bindgen::prelude::*;
 
 thread_local! {
@@ -102,4 +103,48 @@ fn run(recipe_toml: &str, seed: Seed) -> Result<Generated, JsError> {
         pixels: image.into_raw(),
         world,
     })
+}
+
+#[wasm_bindgen]
+pub struct Play {
+    game: Game,
+}
+
+#[wasm_bindgen]
+impl Play {
+    /// The shared daily run for `date` (`YYYY-MM-DD`).
+    pub fn daily(date: &str) -> Play {
+        Play {
+            game: Game::new(Seed::daily(date)),
+        }
+    }
+
+    pub fn seeded(seed_text: &str) -> Play {
+        Play {
+            game: Game::new(Seed::from_text(seed_text)),
+        }
+    }
+
+    /// `up`, `down`, `left`, `right`, `wait`, `descend` or `quaff`. Returns
+    /// whether a turn passed.
+    pub fn act(&mut self, action: &str) -> bool {
+        Action::from_name(action).is_some_and(|a| self.game.act(a))
+    }
+
+    pub fn view(&self) -> String {
+        serde_json::to_string(&self.game.view()).expect("views always serialize")
+    }
+
+    /// RGBA pixels of the current floor, without fog or creatures.
+    #[wasm_bindgen(js_name = floorPixels)]
+    pub fn floor_pixels(&self) -> Vec<u8> {
+        TILESET
+            .with(|t| t.get_or_init(Tileset::builtin).render(self.game.world(), 1))
+            .into_raw()
+    }
+
+    /// The run so far as a compact replay code.
+    pub fn replay(&self) -> String {
+        encode(self.game.actions())
+    }
 }

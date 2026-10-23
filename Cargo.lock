@@ -614,12 +614,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "undercroft-sim"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "undercroft",
+]
+
+[[package]]
 name = "undercroft-wasm"
 version = "0.1.0"
 dependencies = [
  "serde_json",
  "undercroft",
  "undercroft-render",
+ "undercroft-sim",
  "wasm-bindgen",
 ]
 

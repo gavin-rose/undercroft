@@ -411,3 +411,23 @@ dialog .ghost { margin: 0; }
   .world.smooth { transition: none; }
   .toast { animation: none; }
 }
+
+/* Link to the game */
+.play-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px 9px 11px;
+  border: 1px solid #000;
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  font: 700 15px/1 var(--pixel);
+}
+.play-link .tile { width: 16px; height: 16px; }
+.play-link:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000; }
+@media (max-width: 900px) {
+  .play-link { order: 2; margin-left: auto; padding: 7px 10px; }
+  .play-link span { display: none; }
+}

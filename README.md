@@ -6,6 +6,9 @@ Give it a seed and a recipe, and you get a world: dungeons, caves, islands or
 anything you can describe as a pipeline of stages. **The same seed, recipe and
 version always produce the same world, on every platform.**
 
+**[Try the playground](https://undercroft.debugr.net/)** or
+**[play today's dungeon](https://undercroft.debugr.net/play.html)**.
+
 | `dungeon` | `overworld` |
 |---|---|
 | ![dungeon](docs/dungeon.png) | ![overworld](docs/overworld.png) |
@@ -36,6 +39,19 @@ rustup target add wasm32-unknown-unknown
 cargo install wasm-bindgen-cli --version 0.2.117
 ./web/build.sh
 python3 -m http.server -d web 8000   # open http://localhost:8000
+```
+
+### The daily dungeon
+
+[`undercroft-sim`](crates/undercroft-sim) turns the generator into a small
+roguelike: ten floors, turn-based bump combat, fog of war, potions and gear.
+Everyone gets the same dungeon each day, and a whole run is just a seed plus
+its inputs, so any run can be replayed exactly.
+
+Balance is tuned with bots rather than guesswork:
+
+```sh
+cargo run --release -p undercroft-sim --example balance
 ```
 
 CI deploys it to GitHub Pages on every push to `main`, and checks that the
@@ -139,10 +155,11 @@ registry.register::<Flood>("flood");
 - [x] Core pipeline, recipes, built-in dungeon / caves / overworld styles, CLI
 - [x] Tileset renderer: tinted PNG output, tile variants, custom tilesets
 - [x] WebAssembly build and web playground, verified identical to native
+- [x] Daily dungeon crawler with replays and share cards
+- [ ] Watch replays in the browser, shared leaderboard
 - [ ] Autotiling: pick wall and shoreline pieces from neighbouring tiles
 - [ ] npm package
 - [ ] More stages: wave-function collapse, lock-and-key progression, rivers, roads
-- [ ] **Undercroft**, a daily dungeon crawler built on all of the above
 
 ## License
 
