@@ -1,0 +1,18 @@
+[package]
+name = "undercroft-cli"
+description = "Command-line interface for the undercroft generator"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "croft"
+path = "src/main.rs"
+
+[dependencies]
+undercroft.workspace = true
+undercroft-render = { path = "../undercroft-render" }
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+serde_json = "1"

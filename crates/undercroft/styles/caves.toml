@@ -1,0 +1,33 @@
+name = "caves"
+description = "Organic caverns grown with cellular automata"
+gen_version = 1
+width = 80
+height = 45
+
+[[stage]]
+use = "fill"
+tag = "wall"
+
+[[stage]]
+use = "random_fill"
+tag = "floor"
+chance = 0.55
+
+[[stage]]
+use = "cellular_smooth"
+steps = 5
+solid = "wall"
+open = "floor"
+
+[[stage]]
+use = "keep_largest_region"
+fill = "wall"
+
+[[stage]]
+use = "coverage"
+tags = ["floor"]
+min = 0.3
+
+[[stage]]
+use = "place_stairs"
+min_distance = 50

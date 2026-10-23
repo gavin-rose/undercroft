@@ -1,0 +1,14 @@
+[package]
+name = "undercroft-render"
+description = "Tileset renderer for undercroft worlds"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+undercroft.workspace = true
+serde.workspace = true
+image = { version = "0.25", default-features = false, features = ["png"] }
+thiserror = "2"
+toml = "0.8"

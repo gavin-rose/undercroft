@@ -1,0 +1,67 @@
+# Kenney's 1-Bit Pack (CC0, https://kenney.nl/assets/1-bit-pack).
+# Tiles are white-on-transparent and get tinted: `fg` defaults to the tag's
+# colour from the recipe, `bg` to `background`. Coordinates are [column, row].
+# Repeating a coordinate in `tiles` makes that variant more likely.
+
+image = "kenney-1bit/tiles.png"
+tile_size = 16
+background = [24, 20, 28]
+
+[tags.wall]
+tiles = [[10, 17]]
+bg = [44, 38, 46]
+hide_enclosed = true
+
+[tags.floor]
+tiles = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [1, 0], [2, 0]]
+fg = [72, 64, 70]
+
+[tags.stairs_up]
+tiles = [[21, 1]]
+
+[tags.stairs_down]
+tiles = [[2, 6]]
+
+[tags.deep_water]
+tiles = [[0, 0]]
+bg = [28, 52, 110]
+
+[tags.water]
+tiles = [[0, 0], [0, 0], [0, 0], [12, 5]]
+fg = [110, 160, 230]
+bg = [48, 92, 172]
+
+[tags.sand]
+tiles = [[0, 0], [2, 0]]
+fg = [188, 166, 110]
+bg = [214, 192, 134]
+
+[tags.grass]
+tiles = [[0, 0], [0, 0], [5, 0], [6, 0]]
+fg = [128, 196, 96]
+bg = [74, 136, 60]
+
+[tags.forest]
+tiles = [[0, 1], [1, 1], [2, 1], [3, 1]]
+fg = [24, 70, 34]
+bg = [74, 136, 60]
+
+[tags.hill]
+tiles = [[22, 0]]
+fg = [104, 92, 56]
+bg = [140, 150, 80]
+
+[tags.mountain]
+tiles = [[19, 5]]
+fg = [196, 188, 180]
+bg = [96, 88, 84]
+
+[tags.snow]
+tiles = [[19, 5]]
+fg = [255, 255, 255]
+bg = [176, 180, 196]
+
+[tags.town]
+tiles = [[4, 20], [0, 19]]
+fg = [250, 220, 160]
+bg = [74, 136, 60]

@@ -1,0 +1,48 @@
+name = "overworld"
+description = "An island with biomes from height and moisture noise, dotted with towns"
+gen_version = 1
+width = 96
+height = 48
+
+[[stage]]
+use = "noise_field"
+field = "height"
+scale = 20.0
+octaves = 5
+
+[[stage]]
+use = "island_mask"
+field = "height"
+strength = 0.75
+
+[[stage]]
+use = "noise_field"
+field = "moisture"
+scale = 24.0
+octaves = 3
+
+[[stage]]
+use = "classify"
+rules = [
+  { tag = "deep_water", height = [0.0, 0.2] },
+  { tag = "water", height = [0.2, 0.27] },
+  { tag = "sand", height = [0.27, 0.3] },
+  { tag = "snow", height = [0.56, 1.0] },
+  { tag = "mountain", height = [0.5, 0.56] },
+  { tag = "hill", height = [0.44, 0.5] },
+  { tag = "forest", moisture = [0.55, 1.0] },
+  { tag = "grass" },
+]
+
+[[stage]]
+use = "coverage"
+tags = ["sand", "grass", "forest", "hill", "mountain", "snow"]
+min = 0.3
+max = 0.75
+
+[[stage]]
+use = "place"
+tag = "town"
+on = ["grass"]
+count = 5
+min_spacing = 14
